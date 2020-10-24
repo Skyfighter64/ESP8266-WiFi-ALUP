@@ -29,7 +29,7 @@ Microcontroller | Tested | Special instructions
 --------------- |:-----------------:| --------------------
 ESP8266      | :heavy_check_mark: | 
 
-:information_source: This program is written specifically for ESP8266 boards. If you want to use other Boards like an ESP32, please use the [Arduino_WiFi-ALUP implementation] (Add link) instead
+:information_source: This program is written specifically for ESP8266 boards. If you want to use other Boards like an ESP32, please use the [Arduino-WiFi-ALUP implementation] (Add link) instead
 ### Supported LED strips
 
  * All individually addressable LED strips supported by the [FastLED library], including:
@@ -85,7 +85,7 @@ device to detect when the connection betwenn the devices gets interupted (e.g. w
 #### Causes of Frame Errors
 
  * The Frame body size of a received frame is not a multiple of 3
- * The Frame `bodySize * 3` is bigger than `NUM_LEDS`
+ * The Frame `bodySize / 3` is bigger than `NUM_LEDS`
  * The Frame body size of a received frame is smaller than 0
  
  * The Frame body offset of a received frame is smaller than 0
@@ -100,7 +100,6 @@ Software:
 
 Hardware:
 * ESP8266 Microcontroller
-* A USB cable (for installing only)
 * An individually addressable LED strip supported by the [FastLED library]
 * An existing Wifi network
 
@@ -119,9 +118,17 @@ Hardware:
 
 ## Configuration
 
+### Configuration Guide
+For a minimal configuration, you have to:
+
+1. Configure the Wifi Network by setting `STATSSID` and `STATPSK` to the SSID and Password of your existing Wifi Network
+
+2. Set up the LEDs according to the guide below
+
+
 ### Set up the LEDs
 
-To configure the sketch for your specific LED strip, scroll down  to `SetupLEDs()` in the sketch and comment everything except the line corresponding to the type of LEDs you use.
+To configure the sketch for your specific LED strip, open the sketch and scroll down  to `SetupLEDs()` and comment everything except the line corresponding to the type of LEDs you use.
 
 Example for WS2812B:
 
@@ -426,9 +433,11 @@ The value entered after the 'case' represents the ID of your Subprogram. You wil
 
 ## Usage
 
-Connect the microcontroller to the PC using a USB cable.
-Use a program which implements the ALUP, or write your own by using one of the master device implementations (TODO: add link) to write your own program controlling the LEDs.
+* Power on the ESP8266
 
+* Get the IP address of the ESP8266 by looking into your router table, or activating `debug` and reading it from the Serial Monitor (USB required)
+
+* Use a program with ALUP Wifi support to control the LEDs. This will require the IP of the ESP and the `port` of the TCP Server (default is 1201)
 
 ## Contributing
 
